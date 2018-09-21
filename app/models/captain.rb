@@ -10,10 +10,10 @@ class Captain < ActiveRecord::Base
   end
 
   def self.talented_seafarers
-    Captain.joins(:boats).group("captains.id").having(classifications: {name: "Sailboat" && "Motorboat"})
+    Captain.joins(boats: :classifications).group("captains.id").having(classifications: {name: "Sailboat" && "Motorboat"})
   end
 
   def self.non_sailors
-    Captain.joins(boats: :classifications).where.not(classifications: {name: "Sailboat"}).uniq
+    Captain.where.not("id IN (?)", self.sailors.pluck(:id))
   end
 end
