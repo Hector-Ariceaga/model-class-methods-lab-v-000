@@ -10,7 +10,7 @@ class Captain < ActiveRecord::Base
   end
 
   def self.talented_seafarers
-    Captain.joins(boats: :classifications).group("captains.id").having(boats: {classifications: {name: "Sailboat" && "Motorboat"}})
+    Captain.joins(:boats).group("captains.id").having(classifications: {name: "Sailboat" && "Motorboat"})
   end
 
   def self.non_sailors
