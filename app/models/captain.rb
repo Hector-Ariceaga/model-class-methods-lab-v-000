@@ -10,7 +10,7 @@ class Captain < ActiveRecord::Base
   end
 
   def self.talented_seafarers
-    Captain.joins(boats: :classifications).select(classifications: {name: "Motorboat"}).where(:id => self.sailors.pluck(:id))
+    Captain.joins(boats: :classifications).select(classifications: {name: "Motorboat"}).where(:id => self.sailors.pluck(:id)).uniq
   end
 
   def self.non_sailors
